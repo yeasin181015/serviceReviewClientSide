@@ -1,0 +1,21 @@
+.videoPart {
+  height: fit-content;
+}
+video {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+}
+.content {
+  position: absolute;
+  top: 0;
+}
+.overLay {
+  position: absolute;
+  top: 9%;
+  left: 25%;
+  width: 50%;
+  height: 59.5%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+}
