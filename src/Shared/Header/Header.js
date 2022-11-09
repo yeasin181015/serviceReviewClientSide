@@ -5,8 +5,24 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./../../Context/AuthProvider";
+import { FaUserAlt } from "react-icons/fa";
 const Header = () => {
+  const { user, setUserName, logout } = useContext(AuthContext);
+  console.log(user);
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const checkLogout = await logout();
+      setUserName(null);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  console.log(user);
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -14,26 +30,39 @@ const Header = () => {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-            <Link to="/">Home</Link>
+            <Link to="/" className="mr-2">
+              Home
+            </Link>
             <Link to="/blog">Blog</Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
           </Nav>
-          <div>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </div>
+          <Nav className="mr-3">
+            <Link to="/myreviews">My Reviews</Link>
+          </Nav>
+          <Nav>
+            {user?.uid ? (
+              <Nav className="flex justify-center items-center">
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    className="rounded-full w-10 mr-3"
+                  ></img>
+                ) : (
+                  <FaUserAlt className="mr-3"></FaUserAlt>
+                )}
+                <span className="mr-2">{user.displayName || user.email}</span>
+                <button onClick={handleLogout} style={{ color: "red" }}>
+                  Logout
+                </button>
+              </Nav>
+            ) : (
+              <Nav>
+                <Link to="/login" className="mr-2">
+                  Login
+                </Link>
+                <Link to="/register">Register</Link>
+              </Nav>
+            )}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

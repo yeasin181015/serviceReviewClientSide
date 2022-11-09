@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { Link, useLoaderData } from "react-router-dom";
 import videobg from "../../assets/pexels-polina-kovaleva-5645037.mp4";
+import Service from "../Service/Service";
 import "./Home.css";
 const Home = () => {
+  const data = useLoaderData();
   return (
     <>
-      <div className="hero lg:min-h-screen bg-base-200">
+      <div className="hero ">
         <div className="hero-content flex-col lg:flex-row-reverse ">
           <video
             src={videobg}
@@ -21,6 +26,18 @@ const Home = () => {
             </p>
             <button className="btn btn-primary">Get Started</button>
           </div>
+        </div>
+      </div>
+      <div>
+        <div className="service-cards">
+          {data.map((item) => (
+            <Service key={item._id} service={item}></Service>
+          ))}
+        </div>
+        <div className="mt-10">
+          <Link to="/all-services">
+            <Button>See all</Button>
+          </Link>
         </div>
       </div>
     </>

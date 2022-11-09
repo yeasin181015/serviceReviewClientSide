@@ -1,0 +1,9 @@
+.card-compact {
+  width: 400px;
+}
+@media (max-width: 640px) {
+  .card-compact {
+    margin: 5px auto;
+    width: 300px;
+  }
+}

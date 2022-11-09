@@ -1,0 +1,15 @@
+.all-service-div {
+  width: fit-content;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  grid-gap: 50px;
+}
+@media (max-width: 640px) {
+  .all-service-div {
+    width: fit-content;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

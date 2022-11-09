@@ -19,3 +19,13 @@ video {
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 5px;
 }
+.service-cards {
+  display: flex;
+  justify-content: space-around;
+}
+@media (max-width: 640px) {
+  .service-cards {
+    margin: 0 auto;
+    flex-direction: column;
+  }
+}
