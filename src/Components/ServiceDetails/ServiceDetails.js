@@ -1,11 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./../../Context/AuthProvider";
 import ReviewTable from "./ReviewTable";
+import "./ServiceDetails.css";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const ServiceDetails = () => {
   const { serviceItem, specificReviews } = useLoaderData();
-  //   console.log(data);
+  console.log(serviceItem);
   const { _id, img, name, description } = serviceItem;
 
   const { user } = useContext(AuthContext);
@@ -27,6 +29,7 @@ const ServiceDetails = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("genius-token")}`,
       },
       body: JSON.stringify(review),
     })
@@ -42,7 +45,11 @@ const ServiceDetails = () => {
   return (
     <div>
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <img src={img} className="max-w-sm rounded-lg shadow-2xl" />
+        <PhotoProvider>
+          <PhotoView src={img}>
+            <img src={img} alt="" className="max-w-sm rounded-lg shadow-2xl" />
+          </PhotoView>
+        </PhotoProvider>
         <div>
           <h1 className="text-5xl font-bold">{name}</h1>
           <p className="py-6">{description}</p>
@@ -56,23 +63,25 @@ const ServiceDetails = () => {
           <ReviewTable review={specificReviews}></ReviewTable>
         )}
       </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            name="review"
-            id=""
-            cols="30"
-            rows="10"
-            style={{ border: "solid 2px black" }}
-          ></textarea>
-        </form>
-        <button
-          type="submit"
-          style={{ backgroundColor: "red", color: "white", padding: "5px" }}
-        >
-          Submit
-        </button>
-      </div>
+      {user?.uid ? (
+        <div>
+          <h2>Add Review</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col w-50 mx-auto">
+            <textarea
+              name="review"
+              id=""
+              style={{ border: "solid 2px black" }}
+            ></textarea>
+            <div>
+              <button type="submit" className="submitButton">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
