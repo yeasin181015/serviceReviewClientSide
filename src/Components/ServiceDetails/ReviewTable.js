@@ -1,7 +1,7 @@
 const ReviewTable = (props) => {
   //   console.log(props.review);
   const reviews = props.review;
-  console.log(reviews);
+  // console.log(reviews);
   let count = 0;
   return (
     <div className="overflow-x-auto">

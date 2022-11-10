@@ -11,7 +11,7 @@ import { AuthContext } from "./../../Context/AuthProvider";
 import { FaUserAlt } from "react-icons/fa";
 const Header = () => {
   const { user, setUserName, logout } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -22,7 +22,7 @@ const Header = () => {
       console.error(error);
     }
   };
-  console.log(user);
+  // console.log(user);
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
