@@ -7,7 +7,6 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const ServiceDetails = () => {
   const { serviceItem, specificReviews } = useLoaderData();
-  console.log(serviceItem);
   const { _id, img, name, description } = serviceItem;
 
   const { user } = useContext(AuthContext);
@@ -34,9 +33,7 @@ const ServiceDetails = () => {
       body: JSON.stringify(review),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
+      .then((data) => {})
       .catch((error) => {
         console.error("Error:", error);
       });

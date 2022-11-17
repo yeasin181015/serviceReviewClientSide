@@ -1,10 +1,6 @@
-import { Image } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./../../Context/AuthProvider";
@@ -22,21 +18,32 @@ const Header = () => {
       console.error(error);
     }
   };
-  // console.log(user);
+  console.log(user);
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">ShireenKitchenette</Navbar.Brand>
+        <Navbar.Brand>
+          <Link to="/" className="no-underline text-black">
+            ShireenKitchenette
+          </Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-            <Link to="/" className="mr-2">
+            <Link to="/" className="mr-2 no-underline text-black">
               Home
             </Link>
-            <Link to="/blog">Blog</Link>
+            <Link to="/blog" className="no-underline text-black">
+              Blog
+            </Link>
+            <Link to="/all-services" className="ml-2 no-underline text-black">
+              Services
+            </Link>
           </Nav>
           <Nav className="mr-3">
-            <Link to="/myreviews">My Reviews</Link>
+            <Link to="/myreviews" className="no-underline text-black">
+              My Reviews
+            </Link>
           </Nav>
           <Nav>
             {user?.uid ? (
@@ -56,10 +63,12 @@ const Header = () => {
               </Nav>
             ) : (
               <Nav>
-                <Link to="/login" className="mr-2">
+                <Link to="/login" className="mr-2 no-underline text-black">
                   Login
                 </Link>
-                <Link to="/register">Register</Link>
+                <Link to="/register" className="no-underline text-black">
+                  Register
+                </Link>
               </Nav>
             )}
           </Nav>

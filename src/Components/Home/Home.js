@@ -18,11 +18,11 @@ const Home = () => {
             className="w-50 h-50 rounded"
           ></video>
           <div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
+            <h1 className="text-5xl font-bold">Why control hunger!</h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              Cooking is all about people. Food is maybe the only universal
+              thing that really has the power to bring everyone together. No
+              matter what
             </p>
             <button className="btn btn-primary">Get Started</button>
           </div>

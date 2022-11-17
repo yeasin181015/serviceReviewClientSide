@@ -7,6 +7,7 @@ import Update from "./Update";
 const MyReviews = () => {
   const [reviews, setReviews] = useState([]);
   const { user } = useContext(AuthContext);
+  console.log(reviews);
 
   const handleDelete = (id) => {
     const proceed = window.confirm(
@@ -30,36 +31,16 @@ const MyReviews = () => {
         });
     }
   };
-  // const handleUpdate = (id) => {
-  //   fetch(`http://localhost:5000/myreviews/${id}`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       " Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ status: "Approved" }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       if (data.modifiedCount > 0) {
-  //         const remaining = reviews.filter((odr) => odr._id !== id);
-  //         const approving = reviews.find((odr) => odr._id === id);
-  //         approving.status = "Approved";
-  //         const newOrders = [approving, ...remaining];
-  //         setOrders(newOrders);
-  //       }
-  //     });
-  // };
   useEffect(() => {
     fetch(`http://localhost:5000/myreviews?userID=${user?.uid}`)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         setReviews(data);
       });
   }, [user?.uid]);
-  // console.log(reviews);
   let count = 0;
   return (
     <>

@@ -1,10 +1,10 @@
 import React from "react";
-import { useContext, useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider.js";
 import Button from "react-bootstrap/Button";
 import { GoogleAuthProvider } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
@@ -21,29 +21,27 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    try {
-      const user = await signInUser(email, password);
-      const currentUser = {
-        email: user.email,
-      };
+    signInUser(email, password)
+      .then((result) => {
+        const user = result.user;
 
-      fetch("http://localhost:5000/jwt", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(currentUser),
+        const currentUser = {
+          email: user.email,
+        };
+        //get jwt token
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+
+        navigate(from, { replace: true });
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          localStorage.setItem("genius-token", data.token);
-          navigate(from, { replace: true });
-        });
-    } catch (error) {
-      toast("Invalid username or password");
-      console.error(error);
-    }
+      .catch((error) => console.error(error));
   };
 
   const handleGoogleSignIn = async () => {
@@ -56,8 +54,8 @@ const Login = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col">
+    <div className="hero">
+      <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
           <p className="py-6">Please login first.</p>
@@ -66,7 +64,7 @@ const Login = () => {
           <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text ">Email</span>
               </label>
               <input
                 type="email"
@@ -88,6 +86,10 @@ const Login = () => {
                 required
               />
             </div>
+
+            <Link to="/register" className="text-black text-left no-underline">
+              New to our website?
+            </Link>
             <ToastContainer />
             <div className="form-control mt-6">
               <button className="btn btn-primary">Login</button>
