@@ -6,7 +6,7 @@ import Update from "./Update";
 
 const MyReviews = () => {
   const [reviews, setReviews] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   console.log(reviews);
 
   const handleDelete = (id) => {
@@ -18,7 +18,7 @@ const MyReviews = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("genius-token")}`,
+          authorization: `Bearer ${localStorage.getItem("profile-token")}`,
         },
       })
         .then((res) => res.json())
@@ -32,16 +32,24 @@ const MyReviews = () => {
     }
   };
   useEffect(() => {
-    fetch(`http://localhost:5000/myreviews?userID=${user?.uid}`)
+    fetch(`http://localhost:5000/myreviews?userID=${user?.uid}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("profile-token")}`,
+      },
+    })
       .then((res) => {
+        if (res.status === 401) {
+          return logout();
+        }
         return res.json();
       })
       .then((data) => {
         console.log(data);
         setReviews(data);
       });
-  }, [user?.uid]);
+  }, [user?.uid, logout]);
   let count = 0;
+  console.log(reviews);
   return (
     <>
       {reviews.length == 0 ? (

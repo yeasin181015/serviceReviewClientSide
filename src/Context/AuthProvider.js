@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setLoading(true);
+    localStorage.removeItem("profile-token");
     return signOut(auth);
   };
 

@@ -15,7 +15,7 @@ const Update = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("genius-token")}`,
+        authorization: `Bearer ${localStorage.getItem("profile-token")}`,
       },
       body: JSON.stringify(data),
     })
